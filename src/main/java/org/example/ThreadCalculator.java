@@ -25,17 +25,18 @@ public class ThreadCalculator implements ActionListener {
             JButton button = (JButton) event.getSource();
             ThreadFrame frame = new ThreadFrame();
             button.setEnabled(false);
-            int number = 0;
+            mainFrame.got5.setText("Обратный отсчет запущен");
+            int number = 500;
             for (int i = 0; i < 500; i++) {
-                frame.numbersLabel.setText(String.valueOf(number));
-                number++;
+                frame.numbersLabel.setText("До завершения осталось: " + number);
+                number--;
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
-            mainFrame.got5.setText("Поток завершился");
+            mainFrame.got5.setText("Выполнение завершено");
             button.setEnabled(true);
         });
         thread.start();
