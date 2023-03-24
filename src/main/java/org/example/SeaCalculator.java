@@ -4,6 +4,13 @@ import java.awt.event.*;
 
 public class SeaCalculator implements ActionListener {
     private final MainFrame mainFrame;
+    double shipspeed;                                                                   //скорость судна в узлах
+    double shipcourse;                                                                  //курс судна в градусах
+    double windspeed;                                                                   //скорость ветра с альтиметра в м/с
+    double winddirection;                                                               //направление ветра с альтиметра в градусах
+    double windspeedtrue;                                                               //истинная скорость ветра в м/с
+    double winddirectiontrue;                                                           //истинное направление ветра в градусах
+    int balls;                                                                          //сила ветра в баллах, шкала Бофорта
 
     public SeaCalculator(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -25,22 +32,40 @@ public class SeaCalculator implements ActionListener {
     }
 
     private void calculation() throws NumberFormatException {
-        double shipspeed = Double.parseDouble(mainFrame.numbers1.getText());      //скорость судна в м/с
-        double shipcourse = Double.parseDouble(mainFrame.numbers2.getText());     //курс судна в градусах
-        double windspeed = Double.parseDouble(mainFrame.numbers3.getText());      //скорость ветра с альтиметра в м/с
-        double winddirection = Double.parseDouble(mainFrame.numbers4.getText());  //направление ветра с альтиметра в градусах
-        double windspeedtrue;                                                //истинная скорость ветра в м/с
-        double winddirectiontrue;                                            //истинное направление ветра в градусах
-        int balls;                                                           //сила ветра в баллах, шкала Бофорта
+        if (Double.parseDouble(mainFrame.numbers1.getText()) > 100){
+            mainFrame.numbers1.setText("Число должно быть меньше 100");
+            return;
+        } else {
+            shipspeed = Double.parseDouble(mainFrame.numbers1.getText());
+        }
 
-        windspeedtrue = Math.sqrt(shipspeed * shipspeed + windspeed * windspeed //расчет истинной скорости ветра в м/с
-                - 2 * shipspeed * windspeed *
-                Math.cos(Math.toRadians(winddirection)));
+        if (Double.parseDouble(mainFrame.numbers2.getText()) > 359){
+            mainFrame.numbers2.setText("Число должно быть меньше 359");
+            return;
+        } else {
+            shipcourse = Double.parseDouble(mainFrame.numbers2.getText());
+        }
+
+        if (Double.parseDouble(mainFrame.numbers3.getText()) > 150){
+            mainFrame.numbers3.setText("Число должно быть меньше 150");
+            return;
+        } else {
+            windspeed = Double.parseDouble(mainFrame.numbers3.getText());
+        }
+
+        if (Double.parseDouble(mainFrame.numbers4.getText()) > 359){
+            mainFrame.numbers4.setText("Число должно быть меньше 359");
+            return;
+        } else {
+            winddirection = Double.parseDouble(mainFrame.numbers4.getText());
+        }
+
+        windspeedtrue = (Math.sqrt(shipspeed * shipspeed + windspeed * windspeed //расчет истинной скорости ветра в м/с
+                - 2 * shipspeed * windspeed * Math.cos(Math.toRadians(winddirection)))) * 0.514;
         mainFrame.got3.setText(" " + (int) windspeedtrue + " м/с");
 
         winddirectiontrue = Math.toDegrees(Math.asin((shipspeed         //расчет истинного направления ветра в градусах
-                * Math.sin(Math.toRadians(winddirection))) /
-                windspeedtrue)) + shipcourse + winddirection;
+                * Math.sin(Math.toRadians(winddirection))) / windspeedtrue)) + shipcourse + winddirection;
 
         if (winddirectiontrue > 360) {
             winddirectiontrue = winddirectiontrue - 360;

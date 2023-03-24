@@ -5,6 +5,8 @@ import javax.swing.*;
 public class Main {
 
     public static void main(String[] arguments) {
+        BackgroundSound backgroundSound = new BackgroundSound();
+        backgroundSound.playSound();
         Main.setLookAndFeel();
         MainFrame frame = new MainFrame();
     }

@@ -7,7 +7,7 @@ public class MainFrame extends JFrame {
     JPanel row1 = new JPanel();
     JLabel numbersLabel1 = new JLabel("скорость судна: ", JLabel.RIGHT);
     JTextField numbers1 = new JTextField();
-    JLabel numbersLabel1_1 = new JLabel("м/с", JLabel.LEFT);
+    JLabel numbersLabel1_1 = new JLabel("узлы", JLabel.LEFT);
     JLabel numbersLabel2 = new JLabel("курс судна: ", JLabel.RIGHT);
     JTextField numbers2 = new JTextField();
     JLabel numbersLabel2_1 = new JLabel("градусов", JLabel.LEFT);
