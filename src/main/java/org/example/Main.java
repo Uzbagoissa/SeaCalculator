@@ -2,6 +2,10 @@ package org.example;
 
 import javax.swing.*;
 
+/**
+ * Основной класс приложения, содержащий метод main(). В нем происходит запуск звукового сопровождения и открытие
+ * основного окна приложения, графическая оболочка которого определяется в методе setLookAndFeel().
+ */
 public class Main {
 
     public static void main(String[] arguments) {
@@ -11,6 +15,10 @@ public class Main {
         MainFrame frame = new MainFrame();
     }
 
+    /**
+     * В методе setLookAndFeel() происходит активизация графической оболочки "CrossPlatformLookAndFeel" для настройки
+     * внешнего вида интерфейса.
+     */
     private static void setLookAndFeel() {
         try {
             UIManager.setLookAndFeel(

@@ -5,11 +5,18 @@ import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 
+/**
+ * Класс наследуется от BasicButtonUI и является UI-представителем для кнопок приложения, определяющим их внешний вид.
+ * В частности кнопке "Запуск потока" задан соответсвующий UI.
+ */
 public class RunButtonUI extends BasicButtonUI {
     public static final int BUTTON_WIDTH = 120;
     public static final int BUTTON_HEIGHT = 48;
     private static final Border BUTTON_BORDER = BorderFactory.createLineBorder(Color.GREEN);
 
+    /**
+     * В методе paint() определяется цветовая гама кнопки.
+     */
     @Override
     public void paint(Graphics g, JComponent c) {
         AbstractButton button = (AbstractButton) c;
@@ -43,6 +50,9 @@ public class RunButtonUI extends BasicButtonUI {
         super.paint(g, button);
     }
 
+    /**
+     * В методе getPreferredSize() задается размер кнопки.
+     */
     @Override
     public Dimension getPreferredSize(JComponent c) {
         AbstractButton button = (AbstractButton) c;

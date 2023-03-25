@@ -3,6 +3,10 @@ package org.example;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Класс наследуется от JFrame и определяет внешний вид основного окна приложения. Компоненты интерфейса JLabel,
+ * JTextField, JButton располагаются в контейнерах JPanel. Их настройка производится в конструкторе класса.
+ */
 public class MainFrame extends JFrame {
     JPanel row1 = new JPanel();
     JLabel numbersLabel1 = new JLabel("скорость судна: ", JLabel.RIGHT);
@@ -38,6 +42,11 @@ public class MainFrame extends JFrame {
     JLabel got5Label = new JLabel("Состояние потока: ", JLabel.CENTER);
     JTextField got5 = new JTextField();
 
+    /**
+     * В конструкторе класса задаются размеры и расположение всех компонентов графического интерфейса основного окна.
+     * В нем же создаются экземпляры классов SeaCalculator и ThreadCalculator для получения информации от них. Чтобы
+     * кнопки начали генерировать события, используется метод addActionListener().
+     */
     public MainFrame() {
         super("Sea Calculator");
 
@@ -95,7 +104,7 @@ public class MainFrame extends JFrame {
         row4.add(scroll);
         add(row4);
 
-        GridLayout layout5 = new GridLayout(2, 2, 10, 10);
+        GridLayout layout5 = new GridLayout(1, 3, 10, 10);
         row5.setLayout(layout5);
         row5.add(got5Label);
         got5.setEditable(false);

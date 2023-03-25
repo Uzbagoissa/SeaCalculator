@@ -1,21 +1,56 @@
 package org.example;
 
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+/**
+ * Класс отвечает за вычисления истинной скорости и направления ветра и выдачи текстового описания погоды. Класс
+ * наследует интерфейс ActionListener и переопределяет метод actionPerformed(), в котором обрабатывается нажатие кнопок
+ * "Расчитать" и "Reset".
+ */
 public class SeaCalculator implements ActionListener {
     private final MainFrame mainFrame;
-    double shipspeed;                                                                   //скорость судна в узлах
-    double shipcourse;                                                                  //курс судна в градусах
-    double windspeed;                                                                   //скорость ветра с альтиметра в м/с
-    double winddirection;                                                               //направление ветра с альтиметра в градусах
-    double windspeedtrue;                                                               //истинная скорость ветра в м/с
-    double winddirectiontrue;                                                           //истинное направление ветра в градусах
-    int balls;                                                                          //сила ветра в баллах, шкала Бофорта
+    /**
+     * скорость судна в узлах
+     */
+    double shipspeed;
+    /**
+     * курс судна в градусах
+     */
+    double shipcourse;
+    /**
+     * скорость ветра с альтиметра в м/с
+     */
+    double windspeed;
+    /**
+     * направление ветра с альтиметра в градусах
+     */
+    double winddirection;
+    /**
+     * истинная скорость ветра в м/с
+     */
+    double windspeedtrue;
+    /**
+     * истинное направление ветра в градусах
+     */
+    double winddirectiontrue;
+    /**
+     * сила ветра в баллах, шкала Бофорта
+     */
+    int balls;
 
+    /**
+     * В конструктор класса передается экземпляр класса MainFrame, отвечающего за создание основного окна, в которое
+     * передаются результаты вычислений.
+     */
     public SeaCalculator(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
     }
 
+    /**
+     * Метод actionPerformed() обрабатывает результат нажатия кнопок "Расчитать" и "Reset" в основном окне приложения с
+     * помощью методов calculation() и clearAllFields().
+     */
     @Override
     public void actionPerformed(ActionEvent event) {
         String command = event.getActionCommand();
@@ -31,40 +66,51 @@ public class SeaCalculator implements ActionListener {
         }
     }
 
+    /**
+     * Метод calculation() срабатывает после нажатия кнопки "Расчитать". Он получает информацию для расчетов из текстовых
+     * полей numbers1, numbers2, numbers3, numbers4 основного окна приложения. Результаты расчетов выводятся в текстовых
+     * полях got3 и got3_1 основного окна приложения. Текстовое описание погоды выводится в поле got4 основного окна.
+     */
     private void calculation() throws NumberFormatException {
-        if (Double.parseDouble(mainFrame.numbers1.getText()) > 100){
+        if (Double.parseDouble(mainFrame.numbers1.getText()) > 100) {
             mainFrame.numbers1.setText("Число должно быть меньше 100");
             return;
         } else {
             shipspeed = Double.parseDouble(mainFrame.numbers1.getText());
         }
 
-        if (Double.parseDouble(mainFrame.numbers2.getText()) > 359){
+        if (Double.parseDouble(mainFrame.numbers2.getText()) > 359) {
             mainFrame.numbers2.setText("Число должно быть меньше 359");
             return;
         } else {
             shipcourse = Double.parseDouble(mainFrame.numbers2.getText());
         }
 
-        if (Double.parseDouble(mainFrame.numbers3.getText()) > 150){
+        if (Double.parseDouble(mainFrame.numbers3.getText()) > 150) {
             mainFrame.numbers3.setText("Число должно быть меньше 150");
             return;
         } else {
             windspeed = Double.parseDouble(mainFrame.numbers3.getText());
         }
 
-        if (Double.parseDouble(mainFrame.numbers4.getText()) > 359){
+        if (Double.parseDouble(mainFrame.numbers4.getText()) > 359) {
             mainFrame.numbers4.setText("Число должно быть меньше 359");
             return;
         } else {
             winddirection = Double.parseDouble(mainFrame.numbers4.getText());
         }
 
-        windspeedtrue = (Math.sqrt(shipspeed * shipspeed + windspeed * windspeed //расчет истинной скорости ветра в м/с
+        /**
+         * расчет истинной скорости ветра в м/с
+         */
+        windspeedtrue = (Math.sqrt(shipspeed * shipspeed + windspeed * windspeed
                 - 2 * shipspeed * windspeed * Math.cos(Math.toRadians(winddirection)))) * 0.514;
         mainFrame.got3.setText(" " + (int) windspeedtrue + " м/с");
 
-        winddirectiontrue = Math.toDegrees(Math.asin((shipspeed         //расчет истинного направления ветра в градусах
+        /**
+         * расчет истинного направления ветра в градусах
+         */
+        winddirectiontrue = Math.toDegrees(Math.asin((shipspeed
                 * Math.sin(Math.toRadians(winddirection))) / windspeedtrue)) + shipcourse + winddirection;
 
         if (winddirectiontrue > 360) {
@@ -205,6 +251,10 @@ public class SeaCalculator implements ActionListener {
         }
     }
 
+    /**
+     * Метод clearAllFields() срабатывает после нажатия кнопки "Reset" и удаляет все данные из текстовых полей numbers1,
+     * numbers2, numbers3, numbers4, got3, got3_1, got4 основного окна приложения.
+     */
     private void clearAllFields() {
         mainFrame.numbers1.setText(" ");
         mainFrame.numbers2.setText(" ");
